@@ -1,0 +1,48 @@
+.bg-dark-pastel-blue {
+    background-color: #4D7299;
+}
+  
+.text-dark-pastel-blue {
+    color: #4D7299;
+}
+
+.text-dark-pastel-blue:hover {
+    color: #4D7299;
+}
+
+.nav-Item {
+    color: black;
+}
+
+.nav-Item:hover {
+    color: #4D7299;
+    cursor: pointer;
+}
+
+.bg-light-pastel-blue {
+    background-color: #B0C4DE;
+}
+
+.text-light-pastel-blue {
+    color: #B0C4DE;
+}
+
+.bg-pastel-bgblue {
+    background-color: rgb(232, 236, 237);
+}
+
+.bg-creme {
+    background-color: #f5e7d3 ;
+}
+
+.bg-dark-blue {
+    background-color: #3d5c9a;
+}
+
+.text-beige-bg {
+    color: #4d2f1d;
+}
+
+#loginH1 {
+    top: 20vh;
+}
