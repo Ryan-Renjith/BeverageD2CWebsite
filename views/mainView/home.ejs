@@ -24,90 +24,23 @@
     <h2 class="text-center pt-5  fw-bold">Latest Offerings</h2>
     <div class="row d-flex flex-wrap px-3 justify-content-between">
         
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img3.jpg" class="card-img-top img-fluid h-25" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
+        <% for(let product of products) { %>
+            <% if(product.listingStatus) { %>
+                <div class="col-lg-4">
+                    <div class="card w-100 m-3">
+                        <img src="<%= product.image %>" class="card-img-top img-fluid h-25" alt='<%= product.name %>''>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= product.name %></h5>
+                          <p class="card-text"><%= product.description %></p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">&#8377; <%= product.price %></span>
+                            <button class="btn btn-success">Add Item</button>
+                          </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img4.jpg" class="card-img-top img-fluid" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img1.jpg" class="card-img-top img-fluid" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img6.jpg" class="card-img-top img-fluid h-25" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img3.jpg" class="card-img-top img-fluid" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card w-100 m-3">
-                <img src="/images/img5.jpg" class="card-img-top img-fluid" alt="Mango Dragonfruit Refresher">
-                <div class="card-body">
-                  <h5 class="card-title">Mango Dragonfruit Refresher</h5>
-                  <p class="card-text">This tropical-inspired pick-me-up - crafted with a clever combination of vibrant lemonade, sweet mango and red dragonfruit.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">&#8377; 378.00</span>
-                    <button class="btn btn-success">Add Item</button>
-                  </div>
-                </div>
-            </div>
-        </div>
-          
+            <% } %>
+        <% } %>
     </div>
     
 </section>

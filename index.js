@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 
 const admin = require('./models/admin');
+const product = require('./models/product');
 
 app.use(express.urlencoded({extended: true}));  //For express to parse URL-encoded data in request body
 app.use(methodOverride('_method'));
@@ -33,8 +34,9 @@ const requireLogin = (req,res,next) => {
 }
 
 
-app.get('/home', (req,res) => {
-    res.render('mainView/home');
+app.get('/home', async (req,res) => {
+    const products = await product.find({});
+    res.render('mainView/home', {products});
 });
 
 app.get('/admin/login', (req,res) => {
@@ -83,7 +85,7 @@ app.get('/admin/products', requireLogin, (req,res) => {
     res.render('adminView/products');
 });
 
-app.get('/cart', requireLogin, (req,res) => {
+app.get('/cart', (req,res) => {
     res.render('mainView/cart');
 });
 
