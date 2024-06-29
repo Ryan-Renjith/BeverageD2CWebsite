@@ -9,6 +9,7 @@ const session = require('express-session');
 
 const admin = require('./models/admin');
 const product = require('./models/product');
+const order = require('./models/order');
 
 app.use(express.urlencoded({extended: true}));  //For express to parse URL-encoded data in request body
 app.use(methodOverride('_method'));
@@ -35,8 +36,21 @@ const requireLogin = (req,res,next) => {
 
 
 app.get('/home', async (req,res) => {
+    if(!req.session.cartItems) {
+        req.session.cartItems = [];
+    }
+
     const products = await product.find({});
     res.render('mainView/home', {products});
+});
+
+app.post('/home/:id', async (req,res) => {
+    const {id} = req.params;
+    req.session.cartItems = req.session.cartItems || [];
+    if(!req.session.cartItems.includes(id)) {
+        req.session.cartItems.push(id);
+    }
+    res.redirect('/home');
 });
 
 app.get('/admin/login', (req,res) => {
@@ -85,8 +99,60 @@ app.get('/admin/products', requireLogin, (req,res) => {
     res.render('adminView/products');
 });
 
-app.get('/cart', (req,res) => {
-    res.render('mainView/cart');
+app.get('/cart', async (req,res) => {
+    //cartItems = await product.find({ _id: { $in: req.session.cartItems } });
+    let cartItems = [];
+    for(let i=0; i<req.session.cartItems.length; i++) {
+        let element  = await product.findById(req.session.cartItems[i]);
+        cartItems.push(element);
+    }
+    res.render('mainView/cart', {cartItems});
+});
+
+app.post('/cart', async (req,res) => {
+    const currOrder = new order();
+    let totalAmount = 0;
+    for(let i=0; i<req.session.cartItems.length; i++) {
+        currOrder.items.push({productId: req.session.cartItems[i], quantity: req.body.quantities[i]});
+        const currProduct = await product.findById(req.session.cartItems[i]);
+        totalAmount = totalAmount + (currProduct.price * req.body.quantities[i]);
+    }
+
+    currOrder.totalAmount = totalAmount;
+    savedOrder = await currOrder.save();
+    res.redirect(`/billing/${savedOrder._id}`);
+});
+
+app.get('/empty', (req,res) => {
+    req.session.cartItems = [];
+    res.redirect('/cart');
+});
+
+app.get('/billing/:id', async (req,res) => {
+    const {id} = req.params;
+    const currOrder = await order.findById(id).populate('items.productId');
+    res.render('mainView/billing', {currOrder});
+});
+
+app.post('/billing/:id', async (req,res) => {
+    const {id} = req.params;
+    const currOrder = await order.findById(id);
+    currOrder.mobileNo = req.body.mobileNo;
+    currOrder.address = req.body.address;
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = dd + '-' + mm + '-' + yyyy;
+
+    currOrder.date = today;
+    currOrder.completedStatus = false;
+
+    await currOrder.save();
+    req.session.cartItems = [];
+    res.redirect('/home');
+    
 });
 
 

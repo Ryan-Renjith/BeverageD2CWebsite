@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hill Top</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/app.css">
+</head>
+
+<body>
+
+    <h1 class="text-center my-5 fw-bold text-dark-pastel-blue">BILLING DETAILS</h1>
+
+    <div class="row">
+        <div class="col-6 offset-3 d-flex justify-content-center flex-column">
+            <div class="card mb-3" style="width: 100%;">
+                <div class="card-header">
+                  Order id: <%= currOrder._id %>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% for(item of currOrder.items) {%>
+                        <li class="list-group-item">
+                            <div class="card-title d-flex justify-content-between">
+                                <span class="fw-bold  text-muted"><%= item.productId.name %></span>
+                                <span>&#8377; <%= item.productId.price * item.quantity %></span>
+                            </div>
+                            <div class="text-muted">
+                                <span class="me-3">Price: <%= item.productId.price %></span>
+                                <span>Quantity: <%= item.quantity %></span>
+                            </div>
+                        </li>
+                    <% } %>
+                    <li class="list-group-item">
+                        <div class="card-title d-flex justify-content-between">
+                            <span class="fw-bold">Total Amount:</span>
+                            <span class="fw-bold">&#8377; <%= currOrder.totalAmount %></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <form action="/billing/<%= currOrder._id %>" method="POST" class="validatedForm mb-5" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="mobileNo">Mobile No.</label>
+                    <input class="form-control" type="number" id="mobileNo" name="mobileNo" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        This field is required!
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="address">Address</label>
+                    <input class="form-control" type="text" id="address" name="address" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        This field is required!
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success col-12" id="placeOrderBtn" style="display: none;">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+        (() => {
+            'use strict'
+
+            const forms = document.querySelectorAll('.validatedForm');
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+
+<script>
+    const mobileNoInput = document.getElementById('mobileNo');
+    const addressInput = document.getElementById('address');
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+
+    function checkInputs() {
+        if (mobileNoInput.value.trim() !== '' && addressInput.value.trim() !== '') {
+            placeOrderBtn.style.display = 'block';
+        } else {
+            placeOrderBtn.style.display = 'none';
+        }
+    }
+
+    mobileNoInput.addEventListener('input', checkInputs);
+    addressInput.addEventListener('input', checkInputs);
+</script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
+</body>

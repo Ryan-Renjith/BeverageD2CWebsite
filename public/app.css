@@ -1,13 +1,14 @@
 .bg-dark-pastel-blue {
-    background-color: #4D7299;
+    background-color: #3D8B57
+    ;
 }
   
 .text-dark-pastel-blue {
-    color: #4D7299;
+    color: #3D8B57;
 }
 
 .text-dark-pastel-blue:hover {
-    color: #4D7299;
+    color: #3D8B57;
 }
 
 .nav-Item {
@@ -15,12 +16,12 @@
 }
 
 .nav-Item:hover {
-    color: #4D7299;
+    color: #d21713;
     cursor: pointer;
 }
 
 .bg-light-pastel-blue {
-    background-color: #B0C4DE;
+    background-color: #9ecfba;
 }
 
 .text-light-pastel-blue {
@@ -36,7 +37,7 @@
 }
 
 .bg-dark-blue {
-    background-color: #3d5c9a;
+    background-color: #3d9a67;
 }
 
 .text-beige-bg {
@@ -45,4 +46,10 @@
 
 #loginH1 {
     top: 20vh;
+}
+
+input[type="number"]#mobileNo::-webkit-inner-spin-button,
+input[type="number"]#mobileNo::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

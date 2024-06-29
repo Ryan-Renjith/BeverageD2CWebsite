@@ -2,6 +2,7 @@ const admin = require('../models/admin');
 const seedData = require('./seedData');
 const bcrypt = require('bcrypt');
 const product = require('../models/product');
+const order = require('../models/order');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/beverageSite');
@@ -26,21 +27,29 @@ db.once('open', () => console.log('Connected to the database successfully'));
 //     }
 // }
 
-const seedDb = async() => {
-    await product.deleteMany({});
+// const seedDb = async() => {
+//     await product.deleteMany({});
     
-    for(let element of seedData) {
-        const newProduct = new product({
-            name: element.name,
-            price: element.price,
-            description: element.description,
-            image: element.image,
-            listingStatus: true
-        });
+//     for(let element of seedData) {
+//         const newProduct = new product({
+//             name: element.name,
+//             price: element.price,
+//             description: element.description,
+//             image: element.image,
+//             listingStatus: true
+//         });
 
-        await newProduct.save();
-    }
+//         await newProduct.save();
+//     }
+// }
+
+
+const seedDb = async() => {
+    const newOrder = new order(seedData);
+    await newOrder.save();
 }
+
+
 
 seedDb().then(() => {
     db.close();

@@ -3,7 +3,7 @@
 <section id="home" class="mt-md-3 container-fluid px-0">
     <div class="row">
         <div class="col-md-6 px-0">
-            <img src="/images/img1.jpg" alt="" class="img-fluid">
+            <img src="/images/products.jpeg" alt="" class="img-fluid w-100">
         </div>
     
         <div class="col-md-6 bg-dark-pastel-blue text-white text-center d-flex flex-column justify-content-center">
@@ -21,7 +21,7 @@
 </section>
 
 <section id="shop" class="bg-pastel-bgblue row">
-    <h2 class="text-center pt-5  fw-bold">Latest Offerings</h2>
+    <h2 class="text-center pt-5  fw-bold">LATEST OFFERINGS</h2>
     <div class="row d-flex flex-wrap px-3 justify-content-between">
         
         <% for(let product of products) { %>
@@ -34,7 +34,9 @@
                           <p class="card-text"><%= product.description %></p>
                           <div class="d-flex justify-content-between align-items-center">
                             <span class="price">&#8377; <%= product.price %></span>
-                            <button class="btn btn-success">Add Item</button>
+                            <form action="/home/<%= product._id %>" method="POST">
+                                <button class="btn btn-success">Add Item</button>
+                            </form>
                           </div>
                         </div>
                     </div>
@@ -71,10 +73,8 @@
         <div class="col-md-6 bg-creme text-center text-beige-bg fw-bold d-flex flex-column justify-content-center">
             <h1 class="my-5 my-md-3">Contact Us</h1>
         </div>
-        <div class="col-md-6 px-0 bg-dark-blue text-white justify-content-center p-5">
-            <p class="text-center mt-3"><ion-icon name="call-outline"></ion-icon> : +91 1000-1000-1000</p>
-            <p class="text-center mt-3"><ion-icon name="mail-outline"></ion-icon> : someone@something.com</p>
-            <p class="text-center mt-3"><ion-icon name="home-outline"></ion-icon> : some street, someplace, some city - 000000</p>
+        <div class="col-md-6 px-0 bg-dark-blue pt-5">
+            <img src="/images/contacts.jpeg" alt="contacts" class="img-fluid" style="width: 60%; height: 90%; margin-left: 20%;">
         </div>
     </div>
 </section>
