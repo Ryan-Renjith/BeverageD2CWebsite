@@ -1,1 +1,41 @@
-<h1>Orders History</h1>
+<% layout('layouts/utility') %>
+
+<section class="d-flex flex-column my-3 align-items-center">
+    <% for(let order of orders) { %>
+        <% if(order.completedStatus) { %>
+            <div class="card my-3" style="width: 80%;">
+                <div class="row g-0">
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <p class="card-title"><b>Order ID: </b><%= order._id %></p>
+                      <% for(let item of order.items) { %>
+                        <li class="list-group-item mb-4">
+                            <div class="card-title d-flex justify-content-between">
+                                <span class="fw-bold  text-muted"><%= item.productId.name %></span>
+                                <span>&#8377; <%= item.productId.price * item.quantity %></span>
+                            </div>
+                            <div class="text-muted">
+                                <span class="me-3">Price: <%= item.productId.price %></span>
+                                <span>Quantity: <%= item.quantity %></span>
+                            </div>
+                        </li>
+                      <% } %>
+                      <li class="list-group-item">
+                        <div class="card-title d-flex justify-content-between">
+                            <span class="fw-bold">Total Amount:</span>
+                            <span class="fw-bold">&#8377; <%= order.totalAmount %></span>
+                        </div>
+                        <div class="card-title d-flex flex-column justify-content-between mt-4">
+                            <div><b>Order date: </b><%= order.orderDate %></div>
+                            <div><b>Fulfilment date: </b><%= order.fulfilmentDate %></div>
+                            <div><b>Mobile: </b><%= order.mobileNo %></div>
+                            <div><b>Address: </b><%= order.address %></div>
+                        </div>
+                    </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <% } %>
+    <% } %>
+</section>

@@ -18,7 +18,8 @@ const orderSchema = new mongoose.Schema({
     ],
 
   totalAmount: { type: Number },
-  date: { type: String },
+  orderDate: { type: String },
+  fulfilmentDate: { type: String }, 
   mobileNo: { type: Number },
   address: { type: String },
   completedStatus: { type: Boolean }

@@ -35,6 +35,10 @@ const requireLogin = (req,res,next) => {
 }
 
 
+app.get('/', (req,res) => {
+    res.redirect('/home');
+});
+
 app.get('/home', async (req,res) => {
     if(!req.session.cartItems) {
         req.session.cartItems = [];
@@ -55,7 +59,7 @@ app.post('/home/:id', async (req,res) => {
 
 app.get('/admin/login', (req,res) => {
     if(req.session.admin_id)
-        return res.render('adminView/home');
+        return res.redirect('/admin/home');
     
     res.render('mainView/adminLogin');
 });
@@ -87,17 +91,32 @@ app.post('/logout', (req,res) => {
     res.redirect('/home');
 })
 
-app.get('/admin/orderList', requireLogin, (req,res) => {
-    res.render('adminView/orderList');
+app.get('/admin/orderList', requireLogin, async (req,res) => {
+    const orders = await order.find({}).populate('items.productId');
+    res.render('adminView/orderList', {orders});
 });
 
-app.get('/admin/pastOrders', requireLogin, (req,res) => {
-    res.render('adminView/pastOrders');
+app.get('/admin/pastOrders', requireLogin, async (req,res) => {
+    const orders = await order.find({}).populate('items.productId');
+    res.render('adminView/pastOrders', {orders});
 });
 
 app.get('/admin/products', requireLogin, (req,res) => {
     res.render('adminView/products');
 });
+
+app.get('/orders/:id', async (req,res) => {
+    const {id} = req.params;
+    
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = dd + '-' + mm + '-' + yyyy;
+
+    await order.findByIdAndUpdate(id, {completedStatus: true, fulfilmentDate: today});
+    res.redirect('/admin/orderList');
+})
 
 app.get('/cart', async (req,res) => {
     //cartItems = await product.find({ _id: { $in: req.session.cartItems } });
@@ -146,7 +165,7 @@ app.post('/billing/:id', async (req,res) => {
     var yyyy = today.getFullYear();
     today = dd + '-' + mm + '-' + yyyy;
 
-    currOrder.date = today;
+    currOrder.orderDate = today;
     currOrder.completedStatus = false;
 
     await currOrder.save();
