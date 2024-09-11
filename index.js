@@ -101,8 +101,10 @@ app.get('/admin/pastOrders', requireLogin, async (req,res) => {
     res.render('adminView/pastOrders', {orders});
 });
 
-app.get('/admin/products', requireLogin, (req,res) => {
-    res.render('adminView/products');
+app.get('/admin/products', requireLogin, async (req,res) => {
+
+    const products = await product.find({});
+    res.render('adminView/products', {products});
 });
 
 app.get('/orders/:id', async (req,res) => {

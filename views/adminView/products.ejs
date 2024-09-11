@@ -1,1 +1,25 @@
-<h1>Products</h1>
+<% layout('layouts/utility') %>
+
+<% for(let product of products) { %>
+    <% if(product.listingStatus) { %>
+        <div class="col-lg-4">
+            <div class="card w-100 m-3">
+                <img src="<%= product.image %>" class="card-img-top img-fluid h-25" alt='<%= product.name %>'>
+                <div class="card-body">
+                  <h5 class="card-title"><%= product.name %></h5>
+                  <p class="card-text"><%= product.description %></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="price">&#8377; <%= product.price %></span>
+                    <a href="/home"><button class="btn btn-primary">Edit</button></a>
+                    <% if(product.listingStatus) { %>
+                        <a href="/home"><button class="btn btn-secondary">DeList</button></a>
+                    <% } else {%>
+                        <a href="/home"><button class="btn btn-success">List</button></a>
+                    <% } %>
+                    <a href="/home"><button class="btn btn-danger">Delete</button></a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+<% } %>
