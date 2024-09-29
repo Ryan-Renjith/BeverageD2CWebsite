@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -17,7 +21,9 @@ app.use(express.static('public'))  //serve the static files in the public folder
 
 app.use(session({secret: 'littleking19'})); //session management using signed cookies
 
-mongoose.connect('mongodb://localhost:27017/beverageSite');
+
+dbURL = process.env.DB_URL;
+mongoose.connect(dbURL);
 const db = mongoose.connection;
 db.on("error", () => console.error("Error connecting to the database"));
 db.once("open", () => console.log("Connected to the database successfully"));
